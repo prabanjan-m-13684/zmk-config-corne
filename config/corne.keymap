@@ -26,7 +26,6 @@
             require-prior-idle-ms = <150>;
             flavor = "balanced";
             bindings = <&kp>, <&kp>;
-
             hold-trigger-key-positions = <KEYS_R THUMBS>;
             hold-trigger-on-release;
         };
@@ -39,16 +38,14 @@
             require-prior-idle-ms = <150>;
             flavor = "balanced";
             bindings = <&kp>, <&kp>;
-
             hold-trigger-key-positions = <KEYS_L THUMBS>;
             hold-trigger-on-release;
         };
     };
 
     macros {
-        // C++ multi-char tokens
-
         arrow: arrow {
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
@@ -56,15 +53,15 @@
         };
 
         scope: scope {
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
             bindings = <&kp COLON &kp COLON>;
         };
 
-        // Paired brackets — cursor lands BETWEEN
-
         parens: parens {
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
@@ -72,6 +69,7 @@
         };
 
         brackets: brackets {
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
@@ -79,6 +77,7 @@
         };
 
         braces: braces {
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
@@ -86,6 +85,7 @@
         };
 
         angles: angles {
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <5>;
@@ -96,57 +96,44 @@
     combos {
         compatible = "zmk,combos";
 
-        // Vim / editor essentials
-
         combo_esc {
             timeout-ms = <40>;
-            key-positions = <19 20>;   // J + K
+            key-positions = <19 20>;
             bindings = <&kp ESC>;
         };
-
         combo_tab {
             timeout-ms = <40>;
-            key-positions = <15 16>;   // D + F
+            key-positions = <15 16>;
             bindings = <&kp TAB>;
         };
-
         combo_semi {
             timeout-ms = <40>;
-            key-positions = <32 33>;   // , + .  -> ;
+            key-positions = <32 33>;
             bindings = <&kp SEMI>;
         };
-
-        // C++ bracket pairs (cursor inside)
-
         combo_parens {
             timeout-ms = <40>;
-            key-positions = <27 28>;   // C + V  -> ()
+            key-positions = <27 28>;
             bindings = <&parens>;
         };
-
         combo_brackets {
             timeout-ms = <40>;
-            key-positions = <26 27>;   // X + C  -> []
+            key-positions = <26 27>;
             bindings = <&brackets>;
         };
-
         combo_braces {
             timeout-ms = <40>;
-            key-positions = <25 26>;   // Z + X  -> {}
+            key-positions = <25 26>;
             bindings = <&braces>;
         };
-
         combo_angles {
             timeout-ms = <40>;
-            key-positions = <30 31>;   // N + M  -> <>
+            key-positions = <30 31>;
             bindings = <&angles>;
         };
-
-        // Mac region screenshot (most used)
-
         combo_ss_region {
             timeout-ms = <40>;
-            key-positions = <1 2>;     // Q + W -> Cmd+Shift+4
+            key-positions = <1 2>;
             bindings = <&kp LS(LG(N4))>;
         };
     };
@@ -155,11 +142,6 @@
         compatible = "zmk,keymap";
 
         base_mac {
-            // |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U  |  I  |  O  |  P  | BSPC |
-            // | CTRL |GUI/A|ALT/S|CTL/D|SFT/F|  G  |   |  H  |SFT/J|CTL/K|ALT/L|GUI/;|  '   |
-            // | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  ,  |  .  |  /  | ESC  |
-            //                    | GUI | LWR | SPC |   | ENT | RSE | ALT |
-
             bindings = <
 &kp TAB    &kp Q        &kp W        &kp E         &kp R         &kp T        &kp Y    &kp U         &kp I         &kp O        &kp P           &kp BSPC
 &kp LCTRL  &hml LGUI A  &hml LALT S  &hml LCTRL D  &hml LSHFT F  &kp G        &kp H    &hmr RSHFT J  &hmr RCTRL K  &hmr RALT L  &hmr RGUI SEMI  &kp SQT
@@ -178,11 +160,6 @@
         };
 
         lower_layer {
-            // |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BSPC |
-            // | CTRL | F1  | F2  | F3  | F4  | F5  |   | ←   | ↓   | ↑   | →   |HOME | END  |
-            // | SHFT | F6  | F7  | F8  | F9  | F10 |   |WRD← |PGDN |PGUP |WRD→ |     |      |
-            //                    | GUI |     | SPC |   | ENT | ADJ | ALT |
-
             bindings = <
 &kp TAB    &kp N1  &kp N2  &kp N3    &kp N4  &kp N5       &kp N6        &kp N7      &kp N8     &kp N9         &kp N0    &kp BSPC
 &kp LCTRL  &kp F1  &kp F2  &kp F3    &kp F4  &kp F5       &kp LEFT      &kp DOWN    &kp UP     &kp RIGHT      &kp HOME  &kp END
@@ -192,11 +169,6 @@
         };
 
         raise_layer {
-            // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  |  |  \  | BSPC |
-            // | CTRL |  `  |  {  |  (  |  )  |  }  |   |  -  |  =  |  [  |  ]  |  ;  |  '   |
-            // | SHFT |  +  |  <  |  >  |  /  |  ~  |   |  ->  | ::  |  :  |  ?  |  "  |     |
-            //                    | GUI | ADJ | SPC |   | ENT |     | ALT |
-
             bindings = <
 &kp TAB    &kp EXCL   &kp AT    &kp HASH  &kp DLLR    &kp PRCNT    &kp CARET  &kp AMPS   &kp ASTRK  &kp PIPE   &kp BSLH  &kp BSPC
 &kp LCTRL  &kp GRAVE  &kp LBRC  &kp LPAR  &kp RPAR    &kp RBRC     &kp MINUS  &kp EQUAL  &kp LBKT   &kp RBKT   &kp SEMI  &kp SQT
@@ -205,11 +177,7 @@
             >;
         };
 
-        adjust_laye {
-            // |     |     |     |     |     |     |   |CMDTAB|ALTTAB| SS3 | SS4 | SS5 |BTCLR|
-            // |     | BT0 |OS:M |OS:W |RESET|BOOT |   | BT1 | BT2 | BT3 | BT4 |WIN:S|     |
-            // |     |     |     |     |     |     |   |     |     |     |     |     |     |
-
+        adjust_layer {
             bindings = <
 &trans  &trans        &trans      &trans      &trans      &trans         &kp LG(TAB)   &kp LA(TAB)   &kp LS(LG(N3))  &kp LS(LG(N4))  &kp LS(LG(N5))  &bt BT_CLR
 &trans  &bt BT_SEL 0  &to BASE_M  &to BASE_W  &sys_reset  &bootloader    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3    &bt BT_SEL 4    &kp LG(LS(S))   &trans
